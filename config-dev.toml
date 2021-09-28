@@ -1,0 +1,30 @@
+[server]
+host="127.0.0.1"
+port="9090"
+
+
+[databases.web]
+name= "hoo"
+type= "mysql"
+url= "127.0.0.1:3306"
+user= "root"
+password= "123456"
+mode= "release"
+
+
+[log]
+out_file= "tmplogs/info"
+err_file= "tmplogs/err"
+formatter= "text"
+release= 0.1
+mode= "dev"
+level= "debug"
+log_path= "tmp"
+log_name= "debug.log"
+max_age= 24
+rotation_time= 24
+
+
+[upload]
+url = "./upload"  #文件存储根路径，
+max_file =8        #8M

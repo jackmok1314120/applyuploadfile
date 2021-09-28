@@ -1,0 +1,114 @@
+definitions:
+  web.Result:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /apply/addApply:
+    post:
+      consumes:
+      - application/json
+      description: 增加申请人信息
+      parameters:
+      - description: 用户名
+        in: body
+        name: name
+        required: true
+        schema:
+          type: primitive
+      - description: 手机
+        in: body
+        name: phone
+        required: true
+        schema:
+          type: primitive
+      - description: 邮箱
+        in: body
+        name: email
+        required: true
+        schema:
+          type: primitive
+      - description: 币种名称
+        in: body
+        name: coin_name
+        required: true
+        schema:
+          type: primitive
+      - description: 介绍
+        in: body
+        name: introduce
+        required: true
+        schema:
+          type: primitive
+      - description: 身份证文件路径
+        in: body
+        name: id_card_picture
+        required: true
+        schema:
+          type: primitive
+      - description: 营业执照文件路径
+        in: body
+        name: business_picture
+        required: true
+        schema:
+          type: primitive
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/web.Result'
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 单个文件上传
+      parameters:
+      - description: 文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: 文件储存的文件夹名
+        in: formData
+        name: groupName
+        required: true
+        type: string
+      produces:
+      - multipart/form-data
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/web.Result'
+  /uploads:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 多个文件上传
+      parameters:
+      - description: 多个文件
+        in: formData
+        name: files
+        required: true
+        type: file
+      - description: 文件储存的文件夹名
+        in: formData
+        name: groupName
+        required: true
+        type: string
+      produces:
+      - multipart/form-data
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/web.Result'
+swagger: "2.0"
