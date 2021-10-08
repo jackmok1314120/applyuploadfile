@@ -50,7 +50,7 @@ func GetApply(ap *ApplyPending) (aps *ApplyPending, err error) {
 
 func InsertApplyPending(applyInfo *ApplyPending) (int64, error) {
 	db.WebDB.ShowSQL(true)
-	applyInfo.CreateTime = time.Now()
+	applyInfo.CreateTime = time.Now().UTC()
 	applyInfo.Pass = 0
 	return db.WebDB.Insert(applyInfo)
 }
@@ -58,6 +58,6 @@ func InsertApplyPending(applyInfo *ApplyPending) (int64, error) {
 func UpdateApplyPending(applyInfo *ApplyPending) (int64, error) {
 
 	db.WebDB.ShowSQL(true)
-	applyInfo.UpdateTime = time.Now()
+	applyInfo.UpdateTime = time.Now().UTC()
 	return db.WebDB.ID(applyInfo.Id).Update(applyInfo)
 }
