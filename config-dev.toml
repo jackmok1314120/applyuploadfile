@@ -1,14 +1,14 @@
 [server]
-host="127.0.0.1"
-port="9080"
+host="0.0.0.0"
+port="12306"
 
 
 [databases.web]
-name= "hoo"
+name= "hoomanage"
 type= "mysql"
-url= "127.0.0.1:3306"
-user= "root"
-password= "123456"
+url= "rm-j6c5ekl1af4dc9k8w6o.mysql.rds.aliyuncs.com:3306"
+user= "hoocustody"
+password= "Eb!ZXrNt!!x5xru0"
 mode= "release"
 
 
@@ -26,5 +26,5 @@ rotation_time= 24
 
 
 [upload]
-url = "./upload"  #文件存储根路径，
-max_file =8        #8M
+url = "./upload" #文件存储根路径，
+max_file =8 #8M
