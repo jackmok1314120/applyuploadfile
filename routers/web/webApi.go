@@ -27,6 +27,7 @@ type Result struct {
 // 加载Web路由
 func LoadWebRouter(group *gin.RouterGroup) {
 	group.POST("/apply/addApply", AddApply)
+	group.GET("/apply/coins", GetCoins)
 	group.POST("/upload", UpLoadApply)
 	group.POST("/uploads", MultUploadFile)
 }
@@ -76,14 +77,30 @@ func AddApply(ctx *gin.Context) {
 		NewError(ctx, "手机格式不对")
 		return
 	}
+
+	if params.IdCardPicture == "" || params.BusinessPicture == "" {
+		NewError(ctx, "身份证和执照不能为空")
+		return
+	}
+	if _, err := os.Stat(params.IdCardPicture); os.IsNotExist(err) {
+		NewError(ctx, "身份证照路径错误")
+		return
+	}
+	if _, err := os.Stat(params.BusinessPicture); os.IsNotExist(err) {
+		NewError(ctx, "执照路径错误")
+		return
+	}
+
 	apply := &model.ApplyPending{
 		Name:            params.Name,
 		Phone:           params.Phone,
 		Email:           params.Email,
+		CoinName:        params.CoinName,
 		Introduce:       params.Introduce,
 		IdCardPicture:   params.IdCardPicture,
 		BusinessPicture: params.BusinessPicture,
 	}
+
 	existApply, err := model.ExistApply(apply)
 	if err != nil {
 		NewError(ctx, err.Error())
@@ -97,13 +114,22 @@ func AddApply(ctx *gin.Context) {
 		})
 		return
 	}
-
 	pending, err := model.InsertApplyPending(apply)
 	if err != nil {
 		NewError(ctx, err.Error())
 		return
 	}
 	if pending > 0 {
+
+		bodyText := fmt.Sprintf("试用申请:\n  商户: %s, 手机号: %s, 邮箱: %s,币种名称: %s",
+			params.Name, params.Phone, params.Email, params.CoinName)
+		em := &utils.EmailConfig{
+			IamUserName:  config.Cfg.Email.IamUserName,
+			Recipient:    config.Cfg.Email.Recipient,
+			SmtpUsername: config.Cfg.Email.SmtpUsername,
+			SmtpPassword: config.Cfg.Email.SmtpPassword,
+		}
+		em.SendEmail(bodyText)
 		ctx.JSON(http.StatusOK, &Result{
 			Code:    200,
 			Message: fmt.Sprintf("%s 新增完成", params.Name),
@@ -228,6 +254,32 @@ func MultUploadFile(c *gin.Context) {
 		Code:    500,
 		Message: fmt.Sprintf("%d files uploaded!", len(files)),
 		Data:    "",
+	})
+	return
+}
+
+func GetCoins(c *gin.Context) {
+
+	var ls []map[string]interface{}
+
+	all, err := model.FindCoinInfoAll()
+	if err != nil {
+		return
+	}
+
+	for i := 0; i < len(all); i++ {
+		mp := map[string]interface{}{
+			"id":   all[i].Id,
+			"name": all[i].Name,
+		}
+		ls = append(ls, mp)
+	}
+	data := make(map[string]interface{})
+	data["list"] = ls
+	c.JSON(http.StatusOK, Result{
+		Code:    200,
+		Message: "",
+		Data:    data,
 	})
 	return
 }

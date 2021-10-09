@@ -35,6 +35,7 @@ func ExistApply(ap *ApplyPending) (exist bool, err error) {
 	).Exist(ap)
 	return
 }
+
 func GetApply(ap *ApplyPending) (aps *ApplyPending, err error) {
 
 	db.WebDB.ShowSQL(true)

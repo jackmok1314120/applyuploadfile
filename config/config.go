@@ -20,6 +20,7 @@ type Config struct {
 	Databases map[string]Databases
 	UpLoad    Upload
 	Server    Server
+	Email     Email
 }
 
 type Server struct {
@@ -52,6 +53,13 @@ type Log struct {
 type Upload struct {
 	Url     string `toml:"url"`
 	MaxFile int64  `toml:"max_file"`
+}
+
+type Email struct {
+	Recipient    string `toml:"recipient"`
+	SmtpPassword string `toml:"smtp_password"`
+	SmtpUsername string `toml:"smtp_username"`
+	IamUserName  string `toml:"iam_user_name"`
 }
 
 func init() {
