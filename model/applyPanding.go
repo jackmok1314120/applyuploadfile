@@ -36,6 +36,17 @@ func ExistApply(ap *ApplyPending) (exist bool, err error) {
 	return
 }
 
+func ExistApplyByPath(ap *ApplyPending) (exist bool, err error) {
+
+	db.WebDB.ShowSQL(true)
+	//exist, err = db.WebDB.Exist(ap)
+	exist, err = db.WebDB.Where("id_card_picture=? and business_picture=?",
+		ap.IdCardPicture,
+		ap.BusinessPicture,
+	).Exist(ap)
+	return
+}
+
 func GetApply(ap *ApplyPending) (aps *ApplyPending, err error) {
 
 	db.WebDB.ShowSQL(true)

@@ -6,6 +6,7 @@ import (
 )
 
 const (
+	Sender = "email@hoocustody.com"
 	// ConfigSet The name of the configuration set to use for this message.
 	// If you comment out or remove this variable, you will also need to
 	// comment out or remove the header below.
@@ -13,7 +14,8 @@ const (
 	// Host If you're using Amazon SES in an AWS Region other than US West (Oregon),
 	// replace email-smtp.us-west-2.amazonaws.com with the Amazon SES SMTP
 	// endpoint in the appropriate region.
-	Host = "email-smtp.us-west-2.amazonaws.com"
+	Host = "email-smtp.ap-northeast-1.amazonaws.com"
+
 	Port = 587
 
 	// Subject The subject line for the email.
@@ -35,6 +37,8 @@ const (
 	// If you comment out or remove this variable, you will also need to
 	// comment out or remove the header on line 80.
 	Tags = "genre=test,genre2=test2"
+	// The character encoding for the email.
+	CharSet = "UTF-8"
 )
 
 type EmailConfig struct {
@@ -61,7 +65,7 @@ func (emailConfig *EmailConfig) SendEmail(TextBody string) {
 		"To":      {emailConfig.Recipient},
 		"Subject": {Subject},
 		// Comment or remove the next line if you are not using a configuration set
-		"X-SES-CONFIGURATION-SET": {ConfigSet},
+		//"X-SES-CONFIGURATION-SET": {ConfigSet},
 		// Comment or remove the next line if you are not using custom tags
 		"X-SES-MESSAGE-TAGS": {Tags},
 	})

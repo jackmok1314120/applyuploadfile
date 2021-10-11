@@ -3,22 +3,13 @@ host="0.0.0.0"
 port="12306"
 
 
-# [databases.web]
-# name= "hoomanage"
-# type= "mysql"
-# url= "rm-j6c5ekl1af4dc9k8w6o.mysql.rds.aliyuncs.com:3306"
-# user= "hoocustody"
-# password= "Eb!ZXrNt!!x5xru0"
-# mode= "release"
-
 [databases.web]
-name= "hoo"
+name= "hoomanage"
 type= "mysql"
-url= "localhost:3306"
-user= "root"
-password= "123456"
+url= "rm-j6c5ekl1af4dc9k8w6o.mysql.rds.aliyuncs.com:3306"
+user= "hoocustody"
+password= "Eb!ZXrNt!!x5xru0"
 mode= "release"
-
 
 
 [log]
@@ -38,6 +29,7 @@ iam_user_name="moyunrz@163.com"    # from地址
 recipient="lananrz@163.com"        # 接收地址
 smtp_password="BGGwpchMtVjB/2T9/e5ufreDbynWfXdiaQ6QmybgmARD"
 smtp_username="AKIAZXPISQLLA4G5YGXG"
+
 
 [upload]
 url = "./upload" #文件存储根路径，
