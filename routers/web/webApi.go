@@ -54,7 +54,7 @@ func NewError(ctx *gin.Context, err string) {
 // @Param   id_card_picture body string     true  "身份证文件路径"
 // @Param   business_picture body string     true "营业执照文件路径"
 // @Success 200 object  Result    "ok"
-// @Router /apply/addApply [post]
+// @Router /web/apply/addApply [post]
 func AddApply(ctx *gin.Context) {
 	err := xutils.LockMax(ctx.ClientIP(), 2)
 	if err != nil {
@@ -153,7 +153,7 @@ func AddApply(ctx *gin.Context) {
 // @Param   file     	 formData file    true        "文件"
 // @Param   groupName    formData string     true     "文件储存的文件夹名"
 // @Success 200 object Result    "ok"
-// @Router /upload [post]
+// @Router /web/upload [post]
 func UpLoadApply(c *gin.Context) {
 	err := xutils.LockMax(c.ClientIP(), 2)
 	if err != nil {
@@ -204,7 +204,7 @@ func UpLoadApply(c *gin.Context) {
 // @Param   files    	 formData     file      true     "多个文件"
 // @Param   groupName    formData     string    true     "文件储存的文件夹名"
 // @Success 200 object  Result    "ok"
-// @Router /uploads [post]
+// @Router /web/uploads [post]
 func MultUploadFile(c *gin.Context) {
 	err := xutils.LockMax(c.ClientIP(), 2)
 	if err != nil {
@@ -258,6 +258,13 @@ func MultUploadFile(c *gin.Context) {
 	return
 }
 
+// GetCoins
+// @title 获取币种
+// @Description 获取币种
+// @Accept application/json
+// @Produce application/json
+// @Success 200 object  Result  "ok"
+// @Router /web/apply/coins [get]
 func GetCoins(c *gin.Context) {
 
 	var ls []map[string]interface{}
