@@ -136,7 +136,7 @@ func AddApply(ctx *gin.Context) {
 				NewError(ctx, e.Error())
 				return
 			}
-			cName += getCInfo.Name
+			cName += getCInfo.Name + "(" + getCInfo.FullName + ")"
 			if i+1 < len(s) {
 				cName += ","
 			}
