@@ -25,7 +25,7 @@ max_age= 24
 rotation_time= 24
 
 [email]
-iam_user_name="moyunrz@163.com"    # from地址
+iam_user_name="new-project@hoo.com"    # from地址
 recipient="lananrz@163.com"        # 接收地址
 smtp_password="BGGwpchMtVjB/2T9/e5ufreDbynWfXdiaQ6QmybgmARD"
 smtp_username="AKIAZXPISQLLA4G5YGXG"

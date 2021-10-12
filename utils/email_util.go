@@ -23,8 +23,8 @@ const (
 
 	// HtmlBody
 	// The HTML body for the email.
-	HtmlBody = "<html><head><title>SES Sample Email</title></head><body>" +
-		"<h1>Amazon SES Test Email (Gomail)</h1>" +
+	HtmlBody = "<html><head><title>HOO 商户申请提交</title></head><body>" +
+		"<h1>HOO 商户申请提交</h1>" +
 		"<p>This email was sent with " +
 		"<a href='https://aws.amazon.com/ses/'>Amazon SES</a> using " +
 		"the <a href='https://github.com/go-gomail/gomail/'>Gomail " +

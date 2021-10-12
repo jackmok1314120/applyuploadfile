@@ -14,6 +14,8 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -119,10 +121,29 @@ func AddApply(ctx *gin.Context) {
 		NewError(ctx, err.Error())
 		return
 	}
+	cName := ""
 	if pending > 0 {
+		s := strings.Split(params.CoinName, ",")
+		for i := 0; i < len(s); i++ {
+			cInfo := new(model.CoinInfo)
+			cId, err := strconv.Atoi(s[i])
+			if err != nil {
+				NewError(ctx, err.Error())
+				return
+			}
+			getCInfo, e := model.GetCoinById(cInfo, int64(cId))
+			if e != nil {
+				NewError(ctx, e.Error())
+				return
+			}
+			cName += getCInfo.Name
+			if i+1 < len(s) {
+				cName += ","
+			}
+		}
 
-		bodyText := fmt.Sprintf("试用申请:\n  商户: %s, 手机号: %s, 邮箱: %s,币种名称: %s",
-			params.Name, params.Phone, params.Email, params.CoinName)
+		bodyText := fmt.Sprintf("商户试用申请: \n商户: %s \n手机号: %s \n邮箱: %s \n币种名称: %s \n公司简介: %s",
+			params.Name, params.Phone, params.Email, cName, params.Introduce)
 		em := &utils.EmailConfig{
 			IamUserName:  config.Cfg.Email.IamUserName,
 			Recipient:    config.Cfg.Email.Recipient,
