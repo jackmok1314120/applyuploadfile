@@ -56,10 +56,10 @@ type Upload struct {
 }
 
 type Email struct {
-	Recipient    string `toml:"recipient"`
-	SmtpPassword string `toml:"smtp_password"`
-	SmtpUsername string `toml:"smtp_username"`
-	IamUserName  string `toml:"iam_user_name"`
+	Recipient    []string `toml:"recipient"`
+	SmtpPassword string   `toml:"smtp_password"`
+	SmtpUsername string   `toml:"smtp_username"`
+	IamUserName  string   `toml:"iam_user_name"`
 }
 
 func init() {

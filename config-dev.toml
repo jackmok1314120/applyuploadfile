@@ -10,6 +10,14 @@ user= "hoocustody"
 password= "Eb!ZXrNt!!x5xru0"
 mode= "release"
 
+# [databases.web]
+# name= "hoo"
+# type= "mysql"
+# url= "localhost:3306"
+# user= "root"
+# password= "123456"
+# mode= "release"
+
 [log]
 out_file= "tmplogs/info"
 err_file= "tmplogs/err"
@@ -23,10 +31,11 @@ max_age= 24
 rotation_time= 24
 
 [email]
-iam_user_name="new-project@hoo.com"     # from地址
-recipient="lananrz@163.com"             # 接收地址
-smtp_password="BGGwpchMtVjB/2T9/e5ufreDbynWfXdiaQ6QmybgmARD"
-smtp_username="AKIAZXPISQLLA4G5YGXG"
+iam_user_name= "new-project@hoo.com"     # from地址
+recipient= [ "xiaohuasheng@hoo.com" , "heimao@hoo.com" ]             # 接收地址
+# recipient= [ "moyunrz@163.com" , "lananrz@163.com" ]             # 接收地址
+smtp_password="BG/CV8RZPkXrtIde9ZONEO142PqfV+2lP+Fcsgq0pOMQ"
+smtp_username="AKIAZXPISQLLFWOJQDQ4"
 
 [upload]
 url = "./upload" #文件存储根路径，

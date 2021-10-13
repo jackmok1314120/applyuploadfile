@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	Sender = "email@hoocustody.com"
+
 	// ConfigSet The name of the configuration set to use for this message.
 	// If you comment out or remove this variable, you will also need to
 	// comment out or remove the header below.
@@ -14,12 +14,12 @@ const (
 	// Host If you're using Amazon SES in an AWS Region other than US West (Oregon),
 	// replace email-smtp.us-west-2.amazonaws.com with the Amazon SES SMTP
 	// endpoint in the appropriate region.
-	Host = "email-smtp.ap-northeast-1.amazonaws.com"
+	Host = "email.hoocustody.com"
 
 	Port = 587
 
 	// Subject The subject line for the email.
-	Subject = "HOO 商户申请提交"
+	Subject = "HOO 商户申请提交，测试，无需理会"
 
 	// HtmlBody
 	// The HTML body for the email.
