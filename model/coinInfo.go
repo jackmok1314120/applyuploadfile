@@ -35,7 +35,7 @@ func InsertCoinInfo(coinInfo *CoinInfo) (int64, error) {
 func FindCoinInfoAll() ([]CoinInfo, error) {
 	cList := []CoinInfo{}
 	db.WebDB.ShowSQL(true)
-	err := db.WebDB.Find(&cList)
+	err := db.WebDB.OrderBy("name").Find(&cList)
 	if err != nil {
 		return nil, err
 	}
