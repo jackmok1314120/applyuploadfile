@@ -60,6 +60,7 @@ type Email struct {
 	SmtpPassword string   `toml:"smtp_password"`
 	SmtpUsername string   `toml:"smtp_username"`
 	IamUserName  string   `toml:"iam_user_name"`
+	Host         string   `toml:"host"`
 }
 
 func init() {

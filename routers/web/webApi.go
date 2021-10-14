@@ -16,6 +16,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -144,16 +145,21 @@ func AddApply(ctx *gin.Context) {
 
 		bodyText := fmt.Sprintf("商户试用申请: \n商户: %s \n手机号: %s \n邮箱: %s \n币种名称: %s \n公司简介: %s",
 			params.Name, params.Phone, params.Email, cName, params.Introduce)
+		var wg sync.WaitGroup
 		for i := 0; i < len(config.Cfg.Email.Recipient); i++ {
-			em := &utils.EmailConfig{
-				IamUserName:  config.Cfg.Email.IamUserName,
-				Recipient:    config.Cfg.Email.Recipient[i],
-				SmtpUsername: config.Cfg.Email.SmtpUsername,
-				SmtpPassword: config.Cfg.Email.SmtpPassword,
-			}
-			em.SendEmail(bodyText)
+			wg.Add(1)
+			go func(i int) {
+				em := &utils.EmailConfig{
+					IamUserName:  config.Cfg.Email.IamUserName,
+					Recipient:    config.Cfg.Email.Recipient[i],
+					SmtpUsername: config.Cfg.Email.SmtpUsername,
+					SmtpPassword: config.Cfg.Email.SmtpPassword,
+					Host:         config.Cfg.Email.Host,
+				}
+				em.SendEmail(bodyText)
+			}(i)
 		}
-
+		wg.Wait()
 		ctx.JSON(http.StatusOK, &Result{
 			Code:    200,
 			Message: fmt.Sprintf("%s 新增完成", params.Name),

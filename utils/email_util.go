@@ -14,7 +14,7 @@ const (
 	// Host If you're using Amazon SES in an AWS Region other than US West (Oregon),
 	// replace email-smtp.us-west-2.amazonaws.com with the Amazon SES SMTP
 	// endpoint in the appropriate region.
-	Host = "email.hoocustody.com"
+	Host = "email-smtp.ap-northeast-1.amazonaws.com"
 
 	Port = 587
 
@@ -46,6 +46,7 @@ type EmailConfig struct {
 	Recipient    string `json:"recipient"`
 	SmtpUsername string `json:"smtp_username"`
 	SmtpPassword string `json:"smtp_password"`
+	Host         string `json:"host"`
 }
 
 func (emailConfig *EmailConfig) SendEmail(TextBody string) {
@@ -71,7 +72,7 @@ func (emailConfig *EmailConfig) SendEmail(TextBody string) {
 	})
 
 	// Send the email.
-	d := gomail.NewPlainDialer(Host, Port, emailConfig.SmtpUsername, emailConfig.SmtpPassword)
+	d := gomail.NewPlainDialer(emailConfig.Host, Port, emailConfig.SmtpUsername, emailConfig.SmtpPassword)
 
 	// Display an error message if something goes wrong; otherwise,
 	// display a message confirming that the message was sent.
