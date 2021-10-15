@@ -142,13 +142,13 @@ func AddApply(ctx *gin.Context) {
 				cName += ","
 			}
 		}
-
 		bodyText := fmt.Sprintf("商户试用申请: \n商户: %s \n手机号: %s \n邮箱: %s \n币种名称: %s \n公司简介: %s",
 			params.Name, params.Phone, params.Email, cName, params.Introduce)
 		var wg sync.WaitGroup
 		for i := 0; i < len(config.Cfg.Email.Recipient); i++ {
 			wg.Add(1)
 			go func(i int) {
+				defer wg.Done()
 				em := &utils.EmailConfig{
 					IamUserName:  config.Cfg.Email.IamUserName,
 					Recipient:    config.Cfg.Email.Recipient[i],
