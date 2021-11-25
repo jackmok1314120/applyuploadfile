@@ -19,7 +19,7 @@ const (
 	Port = 587
 
 	// Subject The subject line for the email.
-	Subject = "HOO 商户申请提交，测试，无需理会"
+	Subject = "HOO 商户申请提交"
 
 	// HtmlBody
 	// The HTML body for the email.
