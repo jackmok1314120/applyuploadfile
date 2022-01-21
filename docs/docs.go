@@ -142,7 +142,7 @@ var doc = `{
                 }
             }
         },
-        "/uploads": {
+        "/upload": {
             "post": {
                 "description": "多个文件上传",
                 "consumes": [

@@ -33,6 +33,7 @@ func LoadWebRouter(group *gin.RouterGroup) {
 	group.GET("/apply/coins", GetCoins)
 	group.POST("/upload", UpLoadApply)
 	group.POST("/uploads", MultUploadFile)
+	group.Static("/static", "./upload")
 }
 
 func NewError(ctx *gin.Context, err string) {
@@ -194,9 +195,9 @@ func UpLoadApply(c *gin.Context) {
 	group, e := c.GetPostForm("groupName")
 	groupName := ""
 	if !e {
-		groupName = fmt.Sprintf("%v", uuid.New())
+		groupName = fmt.Sprintf("%s-%d", strings.Split(uuid.New(), "-")[0], time.Now().Unix())
 	} else {
-		groupName = fmt.Sprintf("%s-%v", group, uuid.New())
+		groupName = fmt.Sprintf("%s-%d", group, time.Now().Unix())
 	}
 	file, err := c.FormFile("file")
 	if err != nil {
@@ -234,7 +235,7 @@ func UpLoadApply(c *gin.Context) {
 // @Param   files    	 formData     file      true     "多个文件"
 // @Param   groupName    formData     string    true     "文件储存的文件夹名"
 // @Success 200 object  Result    "ok"
-// @Router /web/uploads [post]
+// @Router /web/upload [post]
 func MultUploadFile(c *gin.Context) {
 	err := xutils.LockMax(c.ClientIP(), 2)
 	if err != nil {
@@ -245,7 +246,7 @@ func MultUploadFile(c *gin.Context) {
 	group, e := c.GetPostForm("groupName")
 	groupName := ""
 	if !e {
-		groupName = fmt.Sprintf("%v", uuid.New())
+		groupName = fmt.Sprintf("%s-%d", strings.Split(uuid.New(), "-")[0], time.Now().Unix())
 	} else {
 		groupName = fmt.Sprintf("%s-%v", group, uuid.New())
 	}
