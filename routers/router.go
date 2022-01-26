@@ -23,6 +23,7 @@ func matchRouter(tag string, r *gin.Engine) {
 	path := fmt.Sprintf("%s/%s", strings.ToLower(tag), strings.ToLower(""))
 	switch tag {
 	case "web":
+		r.Static("/static", "./static")
 		web.LoadWebRouter(r.Group(path))
 		break
 	}

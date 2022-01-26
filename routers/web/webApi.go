@@ -10,9 +10,9 @@ import (
 	"github.com/go-basic/uuid"
 	"github.com/onethefour/common/xutils"
 	"github.com/patrickmn/go-cache"
+	"math/rand"
 	"net/http"
 	"os"
-	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -33,7 +33,6 @@ func LoadWebRouter(group *gin.RouterGroup) {
 	group.GET("/apply/coins", GetCoins)
 	group.POST("/upload", UpLoadApply)
 	group.POST("/uploads", MultUploadFile)
-	group.Static("/static", "./upload")
 }
 
 func NewError(ctx *gin.Context, err string) {
@@ -86,20 +85,33 @@ func AddApply(ctx *gin.Context) {
 		NewError(ctx, "身份证和执照不能为空")
 		return
 	}
-	if _, err := os.Stat(params.IdCardPicture); os.IsNotExist(err) {
-		NewError(ctx, "身份证照路径错误")
-		return
-	}
-	if _, err := os.Stat(params.BusinessPicture); os.IsNotExist(err) {
-		NewError(ctx, "执照路径错误")
-		return
+	cName := ""
+	coins := ""
+	s := strings.Split(params.CoinName, ",")
+	for i := 0; i < len(s); i++ {
+		cId, err := strconv.Atoi(s[i])
+		if err != nil {
+			NewError(ctx, err.Error())
+			return
+		}
+		getCInfo, e := model.GetCoinById(int64(cId))
+		if e != nil {
+			NewError(ctx, e.Error())
+			return
+		}
+		cName += getCInfo.Name + "(" + getCInfo.FullName + ")"
+		coins += getCInfo.Name
+		if i+1 < len(s) {
+			cName += ","
+			coins += ","
+		}
 	}
 
 	apply := &model.ApplyPending{
 		Name:            params.Name,
 		Phone:           params.Phone,
 		Email:           params.Email,
-		CoinName:        params.CoinName,
+		CoinName:        coins,
 		Introduce:       params.Introduce,
 		IdCardPicture:   params.IdCardPicture,
 		BusinessPicture: params.BusinessPicture,
@@ -123,26 +135,7 @@ func AddApply(ctx *gin.Context) {
 		NewError(ctx, err.Error())
 		return
 	}
-	cName := ""
 	if pending > 0 {
-		s := strings.Split(params.CoinName, ",")
-		for i := 0; i < len(s); i++ {
-			cInfo := new(model.CoinInfo)
-			cId, err := strconv.Atoi(s[i])
-			if err != nil {
-				NewError(ctx, err.Error())
-				return
-			}
-			getCInfo, e := model.GetCoinById(cInfo, int64(cId))
-			if e != nil {
-				NewError(ctx, e.Error())
-				return
-			}
-			cName += getCInfo.Name + "(" + getCInfo.FullName + ")"
-			if i+1 < len(s) {
-				cName += ","
-			}
-		}
 		bodyText := fmt.Sprintf("商户试用申请: \n商户: %s \n手机号: %s \n邮箱: %s \n币种名称: %s \n公司简介: %s",
 			params.Name, params.Phone, params.Email, cName, params.Introduce)
 		var wg sync.WaitGroup
@@ -205,7 +198,10 @@ func UpLoadApply(c *gin.Context) {
 		return
 	}
 	basePath := utils.CreateDateDir(config.GetConfig().UpLoad.Url + "/" + groupName)
-	filename := basePath + "/" + filepath.Base(file.Filename)
+	str := strings.Split(file.Filename, ".")
+	pathName := fmt.Sprintf("%d.%s", time.Now().UnixNano(), str[len(str)-1])
+	//filename := basePath + "/" + filepath.Base(file.Filename)
+	filename := basePath + "/" + pathName
 	if err := c.SaveUploadedFile(file, filename); err != nil {
 		c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
 		return
@@ -246,9 +242,9 @@ func MultUploadFile(c *gin.Context) {
 	group, e := c.GetPostForm("groupName")
 	groupName := ""
 	if !e {
-		groupName = fmt.Sprintf("%s-%d", strings.Split(uuid.New(), "-")[0], time.Now().Unix())
+		groupName = fmt.Sprintf("%s-%d", RandString(10), time.Now().Unix())
 	} else {
-		groupName = fmt.Sprintf("%s-%v", group, uuid.New())
+		groupName = fmt.Sprintf("%s-%s", group, RandString(10))
 	}
 	//获取到所有的文件
 	form, _ := c.MultipartForm()
@@ -256,23 +252,32 @@ func MultUploadFile(c *gin.Context) {
 	//files := form.File["upload[]"]
 	files := form.File["files"]
 	path := utils.CreateDateDir(config.GetConfig().UpLoad.Url + "/" + groupName)
+	ps := ""
 	//遍历数组进行处理
-	for _, file := range files {
+	for i, file := range files {
 		//进行文件保存
-		err := c.SaveUploadedFile(file, path+"/"+file.Filename)
+		str := strings.Split(file.Filename, ".")
+		pathName := fmt.Sprintf("%d.%s", time.Now().Unix(), str[len(str)-1])
+		err = c.SaveUploadedFile(file, path+"/"+pathName)
 		if err != nil {
 			NewError(c, err.Error())
 			return
 		}
-		b := utils.VailDataFileMd5(path, file.Filename)
+		b := utils.VailDataFileMd5(path, pathName)
 		if !b {
 			_ = os.RemoveAll(path)
 			NewError(c, fmt.Sprintf("同样文件上传频繁请30秒后重试"))
 			return
 		}
+		if i == 0 {
+			ps += "/" + path + "/" + pathName
+		} else {
+			ps += "," + "/" + path + "/" + pathName
+		}
+
 	}
 	data := make(map[string]interface{})
-	data["path"] = path
+	data["path"] = ps
 	if len(files) > 0 {
 		c.JSON(http.StatusOK, Result{
 			Code:    200,
@@ -336,4 +341,14 @@ func AddRequest(ip string) bool {
 		utils.CacheConf.CacheUtil.Set(ip, 1, cache.DefaultExpiration)
 	}
 	return true
+}
+
+func RandString(len int) string {
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	bytes := make([]byte, len)
+	for i := 0; i < len; i++ {
+		b := r.Intn(26) + 65
+		bytes[i] = byte(b)
+	}
+	return string(bytes)
 }

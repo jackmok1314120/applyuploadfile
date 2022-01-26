@@ -18,7 +18,8 @@ func (u *CoinInfo) TableName() string {
 	return "coin_info"
 }
 
-func GetCoinById(c *CoinInfo, id int64) (*CoinInfo, error) {
+func GetCoinById(id int64) (*CoinInfo, error) {
+	c := new(CoinInfo)
 	db.WebDB.ShowSQL(true)
 	//_, err = db.WebDB.Get(ap)
 	_, err := db.WebDB.Where("id=? ", id).Get(c)

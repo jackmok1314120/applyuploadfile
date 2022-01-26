@@ -1,22 +1,33 @@
 [server]
 host="0.0.0.0"
-port="12306"
+port="9000"
 
-[databases.web]
-name= "hoomanage"
-type= "mysql"
-url= "rm-j6c5ekl1af4dc9k8w6o.mysql.rds.aliyuncs.com:3306"
-user= "hoocustody"
-password= "Eb!ZXrNt!!x5xru0"
-mode= "release"
-
+# pro 生产环境
 # [databases.web]
-# name= "hoo"
+# name= "hoomanage"
 # type= "mysql"
-# url= "localhost:3306"
-# user= "root"
-# password= "123456"
+# url= "rm-j6c5ekl1af4dc9k8w6o.mysql.rds.aliyuncs.com:3306"
+# user= "hoocustody"
+# password= "Eb!ZXrNt!!x5xru0"
 # mode= "release"
+
+# test 测试环境
+# [databases.web]
+# name= "root"
+# type= "mysql"
+# url= "3.115.25.173:3306"
+# user= "root"
+# password= "1123456"
+# mode= "release"
+
+# 本地环境
+[databases.web]
+name= "custody"
+type= "mysql"
+url= "localhost:3306"
+user= "root"
+password= "123456"
+mode= "release"
 
 [log]
 out_file= "tmplogs/info"
@@ -39,5 +50,5 @@ smtp_username="AKIAZXPISQLLFWOJQDQ4"
 host = "email-smtp.ap-northeast-1.amazonaws.com"
 
 [upload]
-url = "./upload" #文件存储根路径，
+url = "./static" #文件存储根路径，
 max_file =8 #8M
