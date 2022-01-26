@@ -44,7 +44,6 @@ rotation_time= 24
 [email]
 iam_user_name= "new-project@hoo.com"     # from地址
 recipient= [ "xiaohuasheng@hoo.com" , "heimao@hoo.com" ]             # 接收地址
-# recipient= [ "moyunrz@163.com" , "lananrz@163.com" ]             # 接收地址
 smtp_password="BG/CV8RZPkXrtIde9ZONEO142PqfV+2lP+Fcsgq0pOMQ"
 smtp_username="AKIAZXPISQLLFWOJQDQ4"
 host = "email-smtp.ap-northeast-1.amazonaws.com"
