@@ -13,8 +13,8 @@ import (
 var HooDB *MysqlDB
 
 func init() {
-	HooDB = InitFinanceDB(conf.Cfg.Databases["web"])
-
+	md := conf.Cfg.Server.Mod
+	HooDB = InitFinanceDB(conf.Cfg.Databases[md])
 }
 
 type MysqlDB struct {

@@ -1,27 +1,37 @@
 [server]
 host="0.0.0.0"
 port="9000"
+mod="local"
 
 # pro 生产环境
-# [databases.web]
-# name= "hoomanage"
-# type= "mysql"
-# url= "rm-j6c5ekl1af4dc9k8w6o.mysql.rds.aliyuncs.com:3306"
-# user= "hoocustody"
-# password= "Eb!ZXrNt!!x5xru0"
-# mode= "release"
+[databases.pro]
+name= "hoomanage"
+type= "mysql"
+url= "rm-j6c5ekl1af4dc9k8w6o.mysql.rds.aliyuncs.com:3306"
+user= "hoocustody"
+password= "Eb!ZXrNt!!x5xru0"
+mode= "release"
+
+# pre 准生产环境
+[databases.pre]
+name= "hoocustody_test_new"
+type= "mysql"
+url= "hoocustody-test-1-instance-1.cjokoae5jmn7.ap-northeast-1.rds.amazonaws.com:53306"
+user= "hoocustody"
+password= "Eb!ZXrNt!!x5xru0"
+mode= "release"
 
 # test 测试环境
-# [databases.web]
-# name= "root"
-# type= "mysql"
-# url= "3.115.25.173:3306"
-# user= "root"
-# password= "1123456"
-# mode= "release"
+[databases.test]
+name= "root"
+type= "mysql"
+url= "3.115.25.173:3306"
+user= "root"
+password= "123456"
+mode= "release"
 
-# 本地环境
-[databases.web]
+# local本地环境
+[databases.local]
 name= "custody"
 type= "mysql"
 url= "localhost:3306"

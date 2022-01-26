@@ -13,7 +13,8 @@ import (
 var WebDB *xorm.Engine
 
 func init() {
-	WebDB = InitConnDB2(conf.Cfg.Databases["web"])
+	md := conf.Cfg.Server.Mod
+	WebDB = InitConnDB2(conf.Cfg.Databases[md])
 }
 
 // InitConnDB2

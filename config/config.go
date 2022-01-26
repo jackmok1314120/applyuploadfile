@@ -3,16 +3,14 @@ package config
 import (
 	"applyUpLoadFile/utils"
 	"errors"
-	"fmt"
 	"github.com/BurntSushi/toml"
 	"io/ioutil"
 	"os"
-	"strings"
 )
 
 var (
 	Cfg               = new(Config)
-	DefaultConfigFile = "config-dev.toml"
+	DefaultConfigFile = "config.toml"
 )
 
 type Config struct {
@@ -26,6 +24,7 @@ type Config struct {
 type Server struct {
 	Host string `toml:"host" json:"host"`
 	Port string `toml:"port" json:"port"`
+	Mod  string `toml:"mod" json:"mod"`
 }
 
 type Databases struct {
@@ -64,12 +63,6 @@ type Email struct {
 }
 
 func init() {
-
-	if evn, err := ioutil.ReadFile("../environment"); err != nil {
-		fmt.Println("获取环境文件失败：../environment,defualt \"dev\" env(dev,pre)")
-	} else {
-		DefaultConfigFile = strings.Replace("config-"+string(evn)+".toml", "\n", "", -1)
-	}
 
 	if err := InitConfig(DefaultConfigFile); err != nil {
 		panic(err)
