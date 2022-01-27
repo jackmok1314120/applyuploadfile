@@ -100,7 +100,7 @@ func AddApply(ctx *gin.Context) {
 			return
 		}
 		cName += getCInfo.Name + "(" + getCInfo.FullName + ")"
-		coins += getCInfo.Name
+		coins += strings.ToLower(getCInfo.Name)
 		if i+1 < len(s) {
 			cName += ","
 			coins += ","
