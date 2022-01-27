@@ -1,7 +1,7 @@
 [server]
 host="0.0.0.0"
-port="9000"
-mod="test"
+port="12306"
+mod="local"
 
 # pro 生产环境
 [databases.pro]
