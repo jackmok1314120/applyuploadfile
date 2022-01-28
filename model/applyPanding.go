@@ -14,9 +14,8 @@ type ApplyPending struct {
 	Introduce       string    `json:"introduce"  xorm:"null default '' comment('介绍') VARCHAR(255)" `
 	IdCardPicture   string    `json:"id_card_picture"  xorm:"null default '' comment('身份证复印件') TEXT" binding:"required" `
 	BusinessPicture string    `json:"business_picture"  xorm:"null default '' comment('营业执照复印件') VARCHAR(255)" binding:"required"`
-	Pass            int64     `json:"pass" xorm:" default 0 comment('营业执照复印件') INT(11)"`
-	CreateTime      time.Time `json:"create_time"  xorm:" default '' comment('创建时间') DATETIME"`
-	UpdateTime      time.Time `json:"update_time"  xorm:" default '' comment('创建时间') DATETIME"`
+	CreatedAt       time.Time `json:"created_at"  xorm:" default '' comment('创建时间') DATETIME"`
+	UpdatedAt       time.Time `json:"updated_at"  xorm:" default '' comment('创建时间') DATETIME"`
 }
 
 func (u *ApplyPending) TableName() string {
@@ -62,14 +61,13 @@ func GetApply(ap *ApplyPending) (aps *ApplyPending, err error) {
 
 func InsertApplyPending(applyInfo *ApplyPending) (int64, error) {
 	db.WebDB.ShowSQL(true)
-	applyInfo.CreateTime = time.Now().UTC()
-	applyInfo.Pass = 0
+	applyInfo.CreatedAt = time.Now().UTC()
 	return db.WebDB.Insert(applyInfo)
 }
 
 func UpdateApplyPending(applyInfo *ApplyPending) (int64, error) {
 
 	db.WebDB.ShowSQL(true)
-	applyInfo.UpdateTime = time.Now().UTC()
+	applyInfo.UpdatedAt = time.Now().UTC()
 	return db.WebDB.ID(applyInfo.Id).Update(applyInfo)
 }
