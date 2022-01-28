@@ -100,7 +100,7 @@ func AddApply(ctx *gin.Context) {
 			return
 		}
 		cName += getCInfo.Name + "(" + getCInfo.FullName + ")"
-		coins += strings.ToLower(getCInfo.Name)
+		coins += strings.ToUpper(getCInfo.Name)
 		if i+1 < len(s) {
 			cName += ","
 			coins += ","
@@ -246,7 +246,7 @@ func MultUploadFile(c *gin.Context) {
 	group, e := c.GetPostForm("groupName")
 	groupName := ""
 	if !e {
-		groupName = fmt.Sprintf("%s-%d", RandString(10), time.Now().Unix())
+		groupName = fmt.Sprintf("%s-%d", RandString(8), time.Now().Unix())
 	} else {
 		groupName = fmt.Sprintf("%s-%s", group, RandString(10))
 	}
@@ -352,5 +352,5 @@ func RandString(len int) string {
 		b := r.Intn(26) + 65
 		bytes[i] = byte(b)
 	}
-	return strings.ToUpper(string(bytes))
+	return strings.ToLower(string(bytes))
 }
