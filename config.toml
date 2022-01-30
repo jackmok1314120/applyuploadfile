@@ -18,7 +18,7 @@ mode= "release"
 name= "custody_pre"
 type= "mysql"
 url= "hoocustody-dev.cluster-cjokoae5jmn7.ap-northeast-1.rds.amazonaws.com:53306"
-user= "hoocustody"
+user= "custody"
 password= "OpDomFBx7Wk4Lts33qg57jXh"
 mode= "release"
 
