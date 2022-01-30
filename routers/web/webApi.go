@@ -12,7 +12,6 @@ import (
 	"github.com/patrickmn/go-cache"
 	"math/rand"
 	"net/http"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -207,12 +206,12 @@ func UpLoadApply(c *gin.Context) {
 		c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
 		return
 	}
-	b := utils.VailDataFileMd5(basePath, file.Filename)
-	if !b {
-		_ = os.RemoveAll(basePath)
-		NewError(c, fmt.Sprintf("同样文件上传频繁请30秒后重试"))
-		return
-	}
+	//b := utils.VailDataFileMd5(basePath, file.Filename)
+	//if !b {
+	//	_ = os.RemoveAll(basePath)
+	//	NewError(c, fmt.Sprintf("同样文件上传频繁请30秒后重试"))
+	//	return
+	//}
 	data := make(map[string]interface{})
 	data["path"] = fmt.Sprintf("%s/%s", host, filename)
 	//res := &
@@ -267,12 +266,12 @@ func MultUploadFile(c *gin.Context) {
 			NewError(c, err.Error())
 			return
 		}
-		b := utils.VailDataFileMd5(path, pathName)
-		if !b {
-			_ = os.RemoveAll(path)
-			NewError(c, fmt.Sprintf("同样文件上传频繁请30秒后重试"))
-			return
-		}
+		//b := utils.VailDataFileMd5(path, pathName)
+		//if !b {
+		//	_ = os.RemoveAll(path)
+		//	NewError(c, fmt.Sprintf("同样文件上传频繁请30秒后重试"))
+		//	return
+		//}
 		if i != 0 {
 			ps += ","
 		}
