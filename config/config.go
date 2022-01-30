@@ -22,9 +22,10 @@ type Config struct {
 }
 
 type Server struct {
-	Host string `toml:"host" json:"host"`
-	Port string `toml:"port" json:"port"`
-	Mod  string `toml:"mod" json:"mod"`
+	Scheme string `toml:"scheme" json:"scheme"`
+	Host   string `toml:"host" json:"host"`
+	Port   string `toml:"port" json:"port"`
+	Mod    string `toml:"mod" json:"mod"`
 }
 
 type Databases struct {

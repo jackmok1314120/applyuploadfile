@@ -100,7 +100,7 @@ func AddApply(ctx *gin.Context) {
 			return
 		}
 		cName += getCInfo.Name + "(" + getCInfo.FullName + ")"
-		coins += strings.ToLower(getCInfo.Name)
+		coins += strings.ToUpper(getCInfo.Name)
 		if i+1 < len(s) {
 			cName += ","
 			coins += ","
@@ -179,6 +179,7 @@ func AddApply(ctx *gin.Context) {
 // @Success 200 object Result    "ok"
 // @Router /web/upload [post]
 func UpLoadApply(c *gin.Context) {
+	host := fmt.Sprintf("%s://%s", config.Cfg.Server.Scheme, c.Request.Host)
 	err := xutils.LockMax(c.ClientIP(), 2)
 	if err != nil {
 		NewError(c, err.Error())
@@ -213,7 +214,7 @@ func UpLoadApply(c *gin.Context) {
 		return
 	}
 	data := make(map[string]interface{})
-	data["path"] = filename
+	data["path"] = fmt.Sprintf("%s/%s", host, filename)
 	//res := &
 	c.JSON(http.StatusOK, Result{
 		Code:    200,
@@ -233,6 +234,9 @@ func UpLoadApply(c *gin.Context) {
 // @Success 200 object  Result    "ok"
 // @Router /web/upload [post]
 func MultUploadFile(c *gin.Context) {
+
+	host := fmt.Sprintf("%s://%s", config.Cfg.Server.Scheme, c.Request.Host)
+	fmt.Println("协议：" + c.Request.URL.Scheme)
 	err := xutils.LockMax(c.ClientIP(), 2)
 	if err != nil {
 		NewError(c, err.Error())
@@ -242,7 +246,7 @@ func MultUploadFile(c *gin.Context) {
 	group, e := c.GetPostForm("groupName")
 	groupName := ""
 	if !e {
-		groupName = fmt.Sprintf("%s-%d", RandString(10), time.Now().Unix())
+		groupName = fmt.Sprintf("%s-%d", RandString(8), time.Now().Unix())
 	} else {
 		groupName = fmt.Sprintf("%s-%s", group, RandString(10))
 	}
@@ -269,12 +273,10 @@ func MultUploadFile(c *gin.Context) {
 			NewError(c, fmt.Sprintf("同样文件上传频繁请30秒后重试"))
 			return
 		}
-		if i == 0 {
-			ps += "/" + path + "/" + pathName
-		} else {
-			ps += "," + "/" + path + "/" + pathName
+		if i != 0 {
+			ps += ","
 		}
-
+		ps += fmt.Sprintf("%s/%s/%s", host, path, pathName)
 	}
 	data := make(map[string]interface{})
 	data["path"] = ps
@@ -350,5 +352,5 @@ func RandString(len int) string {
 		b := r.Intn(26) + 65
 		bytes[i] = byte(b)
 	}
-	return string(bytes)
+	return strings.ToLower(string(bytes))
 }
