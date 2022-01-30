@@ -261,7 +261,7 @@ func MultUploadFile(c *gin.Context) {
 	for i, file := range files {
 		//进行文件保存
 		str := strings.Split(file.Filename, ".")
-		pathName := fmt.Sprintf("%d.%s", time.Now().Unix(), str[len(str)-1])
+		pathName := fmt.Sprintf("%d.%s", time.Now().Unix()+int64(1000+i), str[len(str)-1])
 		err = c.SaveUploadedFile(file, path+"/"+pathName)
 		if err != nil {
 			NewError(c, err.Error())
