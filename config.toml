@@ -2,24 +2,24 @@
 scheme = "http"
 host="0.0.0.0"
 port="12306"
-mod="local"
+mod="pre"
 
 # pro 生产环境
 [databases.pro]
-name= "hoomanage"
+name= "custody_pre"
 type= "mysql"
-url= "rm-j6c5ekl1af4dc9k8w6o.mysql.rds.aliyuncs.com:3306"
+url= "hoocustody-dev.cluster-cjokoae5jmn7.ap-northeast-1.rds.amazonaws.com:53306"
 user= "hoocustody"
-password= "Eb!ZXrNt!!x5xru0"
+password= "OpDomFBx7Wk4Lts33qg57jXh"
 mode= "release"
 
 # pre 准生产环境
 [databases.pre]
-name= "hoocustody_test_new"
+name= "custody_pre"
 type= "mysql"
-url= "hoocustody-test-1-instance-1.cjokoae5jmn7.ap-northeast-1.rds.amazonaws.com:53306"
+url= "hoocustody-dev.cluster-cjokoae5jmn7.ap-northeast-1.rds.amazonaws.com:53306"
 user= "hoocustody"
-password= "Eb!ZXrNt!!x5xru0"
+password= "OpDomFBx7Wk4Lts33qg57jXh"
 mode= "release"
 
 # test 测试环境
