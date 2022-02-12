@@ -2,7 +2,7 @@
 scheme = "https"
 host="0.0.0.0"
 port="12306"
-mod="pre"
+mod="test"
 
 # pro 生产环境
 [databases.pro]
@@ -24,7 +24,7 @@ mode= "release"
 
 # test 测试环境
 [databases.test]
-name= "root"
+name= "custody"
 type= "mysql"
 url= "3.115.25.173:3306"
 user= "root"
@@ -54,9 +54,9 @@ rotation_time= 24
 
 [email]
 iam_user_name= "new-project@hoo.com"     # from地址
-recipient= [ "xiaohuasheng@hoo.com" , "heimao@hoo.com" ]             # 接收地址
-smtp_password="BG/CV8RZPkXrtIde9ZONEO142PqfV+2lP+Fcsgq0pOMQ"
-smtp_username="AKIAZXPISQLLFWOJQDQ4"
+recipient= [ "xiaohuasheng@hoo.com"]             # 接收地址
+smtp_password="BGTAH2cr4Ief0SdAip2G2PwP2NH8gjQvIvqp1lANTYfk"
+smtp_username="AKIA3J4EEKZXW6G5RQCZ"
 host = "email-smtp.ap-northeast-1.amazonaws.com"
 
 [upload]
