@@ -27,8 +27,8 @@ mode= "release"
 name= "custody"
 type= "mysql"
 url= "127.0.0.1:3306"
-user= "root"
-password= "123456"
+user= "custody"
+password= "OpDomFBx7Wk4Lts33qg57jXh"
 mode= "release"
 
 # local本地环境
