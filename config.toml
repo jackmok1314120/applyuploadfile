@@ -1,5 +1,5 @@
 [server]
-scheme = "https"
+scheme = "http"
 host="0.0.0.0"
 port="12306"
 mod="test"
@@ -26,16 +26,16 @@ mode= "release"
 [databases.test]
 name= "custody"
 type= "mysql"
-url= "3.115.25.173:3306"
-user= "root"
-password= "123456"
+url= "127.0.0.1:3306"
+user= "custody"
+password= "OpDomFBx7Wk4Lts33qg57jXh"
 mode= "release"
 
 # local本地环境
 [databases.local]
 name= "custody"
 type= "mysql"
-url= "localhost:3306"
+url= "127.0.0.1:3306"
 user= "root"
 password= "123456"
 mode= "release"

@@ -32,6 +32,7 @@ func LoadWebRouter(group *gin.RouterGroup) {
 	group.GET("/apply/coins", GetCoins)
 	group.POST("/upload", UpLoadApply)
 	group.POST("/uploads", MultUploadFile)
+	group.GET("/health", CheckHealth)
 }
 
 func NewError(ctx *gin.Context, err string) {
@@ -41,6 +42,15 @@ func NewError(ctx *gin.Context, err string) {
 		"message": err,
 		"data":    "",
 	})
+}
+
+func CheckHealth(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, &Result{
+		Code:    200,
+		Message: "success",
+		Data:    "success",
+	})
+	return
 }
 
 // AddApply
