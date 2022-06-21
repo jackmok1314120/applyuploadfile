@@ -6,29 +6,29 @@ mod="test"
 
 # pro 生产环境
 [databases.pro]
-name= "custody_pre"
+name= ""
 type= "mysql"
-url= "hoocustody-dev.cluster-cjokoae5jmn7.ap-northeast-1.rds.amazonaws.com:53306"
-user= "custody"
-password= "OpDomFBx7Wk4Lts33qg57jXh"
+url= ""
+user= ""
+password= ""
 mode= "release"
 
 # pre 准生产环境
 [databases.pre]
-name= "custody_pre"
+name= ""
 type= "mysql"
-url= "hoocustody-dev.cluster-cjokoae5jmn7.ap-northeast-1.rds.amazonaws.com:53306"
+url= ""
 user= "custody"
-password= "OpDomFBx7Wk4Lts33qg57jXh"
+password= ""
 mode= "release"
 
 # test 测试环境
 [databases.test]
-name= "custody"
+name= ""
 type= "mysql"
 url= "127.0.0.1:3306"
-user= "custody"
-password= "OpDomFBx7Wk4Lts33qg57jXh"
+user= ""
+password= ""
 mode= "release"
 
 # local本地环境
@@ -53,11 +53,11 @@ max_age= 24
 rotation_time= 24
 
 [email]
-iam_user_name= "new-project@hoo.com"     # from地址
-recipient= [ "xiaohuasheng@hoo.com"]             # 接收地址
-smtp_password="BGTAH2cr4Ief0SdAip2G2PwP2NH8gjQvIvqp1lANTYfk"
-smtp_username="AKIA3J4EEKZXW6G5RQCZ"
-host = "email-smtp.ap-northeast-1.amazonaws.com"
+iam_user_name= ""     # from地址
+recipient= [ ""]             # 接收地址
+smtp_password=""
+smtp_username=""
+host = ""
 
 [upload]
 url = "./static" #文件存储根路径，
